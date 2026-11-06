@@ -1,6 +1,6 @@
 # Controle de Entregas
 
-![versão](https://img.shields.io/badge/vers%C3%A3o-v0.1.0-blue)
+![versão](https://img.shields.io/badge/vers%C3%A3o-v0.2.0-blue)
 ![licença](https://img.shields.io/badge/licen%C3%A7a-MIT-green)
 ![testes](https://github.com/luisasantos2401/controle-entregas/actions/workflows/tests.yml/badge.svg)
 
@@ -14,10 +14,10 @@ Cada disciplina passa atividades por um canal diferente e os prazos se acumulam.
 
 | ID | Funcionalidade | Comando | Status |
 |----|----------------|---------|--------|
-| RF01 | Cadastrar entrega | `cadastrar` | Planejada |
-| RF02 | Listar por prazo | `listar` | Planejada |
-| RF03 | Filtrar por status/disciplina | `listar --status`, `--disciplina` | Planejada |
-| RF04 | Concluir entrega | `concluir` | Planejada |
+| RF01 | Cadastrar entrega | `cadastrar` | Implementada |
+| RF02 | Listar por prazo | `listar` | Implementada |
+| RF03 | Filtrar por status/disciplina | `listar --status`, `--disciplina` | Implementada |
+| RF04 | Concluir entrega | `concluir` | Implementada |
 | RF05 | Editar entrega | `editar` | Planejada |
 | RF06 | Remover entrega | `remover` | Planejada |
 | RF07 | Atrasadas e próximas do prazo | `prazos` | Planejada |
