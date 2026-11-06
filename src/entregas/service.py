@@ -97,3 +97,10 @@ def editar(conn, id_entrega, titulo=None, disciplina=None, prazo=None, descricao
         (novo_titulo, nova_disc, novo_prazo, nova_desc, id_entrega),
     )
     conn.commit()
+
+
+# --- RF06: remover ---
+def remover(conn, id_entrega):
+    buscar(conn, id_entrega)
+    conn.execute("DELETE FROM entregas WHERE id = ?", (id_entrega,))
+    conn.commit()
