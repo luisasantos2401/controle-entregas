@@ -65,3 +65,14 @@ def listar(conn, status=None, disciplina=None):
         alvo = disciplina.strip().casefold()
         linhas = [l for l in linhas if l["disciplina"].casefold() == alvo]
     return linhas
+
+
+# --- RF04: concluir ---
+def concluir(conn, id_entrega):
+    entrega = buscar(conn, id_entrega)
+    if entrega["status"] == CONCLUIDA:
+        raise ErroValidacao(f"A entrega {id_entrega} já está concluída.")
+    conn.execute(
+        "UPDATE entregas SET status = ? WHERE id = ?", (CONCLUIDA, id_entrega)
+    )
+    conn.commit()
