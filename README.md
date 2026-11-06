@@ -1,6 +1,6 @@
 # Controle de Entregas
 
-![versão](https://img.shields.io/badge/vers%C3%A3o-v0.3.0-blue)
+![versão](https://img.shields.io/badge/vers%C3%A3o-v1.0.0-blue)
 ![licença](https://img.shields.io/badge/licen%C3%A7a-MIT-green)
 ![testes](https://github.com/luisasantos2401/controle-entregas/actions/workflows/tests.yml/badge.svg)
 
