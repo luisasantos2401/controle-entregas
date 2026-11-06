@@ -35,3 +35,15 @@ class TestCadastrar(Base):
     def test_prazo_invalido_e_recusado(self):
         with self.assertRaises(service.ErroValidacao):
             self.nova(prazo="31/02/2026")
+
+
+# --- RF02 ---
+class TestListar(Base):
+    def test_lista_ordenada_por_prazo(self):
+        self.nova("B", prazo="2026-11-20")
+        self.nova("A", prazo="2026-11-08")
+        titulos = [e["titulo"] for e in service.listar(self.conn)]
+        self.assertEqual(titulos, ["A", "B"])
+
+    def test_lista_vazia(self):
+        self.assertEqual(service.listar(self.conn), [])
