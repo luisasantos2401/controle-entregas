@@ -65,3 +65,21 @@ class TestFiltrar(Base):
     def test_status_invalido_e_recusado(self):
         with self.assertRaises(service.ErroValidacao):
             service.listar(self.conn, status="xyz")
+
+
+# --- RF04 ---
+class TestConcluir(Base):
+    def test_conclui_entrega(self):
+        id_ = self.nova()
+        service.concluir(self.conn, id_)
+        self.assertEqual(service.buscar(self.conn, id_)["status"], "concluida")
+
+    def test_nao_conclui_duas_vezes(self):
+        id_ = self.nova()
+        service.concluir(self.conn, id_)
+        with self.assertRaises(service.ErroValidacao):
+            service.concluir(self.conn, id_)
+
+    def test_id_inexistente(self):
+        with self.assertRaises(service.EntregaNaoEncontrada):
+            service.concluir(self.conn, 99)
