@@ -1,6 +1,6 @@
 # Controle de Entregas
 
-![versão](https://img.shields.io/badge/vers%C3%A3o-v0.2.0-blue)
+![versão](https://img.shields.io/badge/vers%C3%A3o-v0.3.0-blue)
 ![licença](https://img.shields.io/badge/licen%C3%A7a-MIT-green)
 ![testes](https://github.com/luisasantos2401/controle-entregas/actions/workflows/tests.yml/badge.svg)
 
@@ -20,7 +20,7 @@ Cada disciplina passa atividades por um canal diferente e os prazos se acumulam.
 | RF04 | Concluir entrega | `concluir` | Implementada |
 | RF05 | Editar entrega | `editar` | Implementada |
 | RF06 | Remover entrega | `remover` | Implementada |
-| RF07 | Atrasadas e próximas do prazo | `prazos` | Planejada |
+| RF07 | Atrasadas e próximas do prazo | `prazos` | Implementada |
 
 Fora do escopo desta versão: interface gráfica, múltiplos usuários, lembretes e exportação de dados.
 
