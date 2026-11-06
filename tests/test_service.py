@@ -47,3 +47,21 @@ class TestListar(Base):
 
     def test_lista_vazia(self):
         self.assertEqual(service.listar(self.conn), [])
+
+
+# --- RF03 ---
+class TestFiltrar(Base):
+    def test_filtra_por_disciplina_sem_diferenciar_maiusculas(self):
+        self.nova("A", disciplina="Ética")
+        self.nova("B", disciplina="Coding")
+        titulos = [e["titulo"] for e in service.listar(self.conn, disciplina="ética")]
+        self.assertEqual(titulos, ["A"])
+
+    def test_filtra_por_status(self):
+        self.nova("A")
+        self.assertEqual(len(service.listar(self.conn, status="pendente")), 1)
+        self.assertEqual(service.listar(self.conn, status="concluida"), [])
+
+    def test_status_invalido_e_recusado(self):
+        with self.assertRaises(service.ErroValidacao):
+            service.listar(self.conn, status="xyz")

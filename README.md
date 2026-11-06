@@ -16,7 +16,7 @@ Cada disciplina passa atividades por um canal diferente e os prazos se acumulam.
 |----|----------------|---------|--------|
 | RF01 | Cadastrar entrega | `cadastrar` | Implementada |
 | RF02 | Listar por prazo | `listar` | Implementada |
-| RF03 | Filtrar por status/disciplina | `listar --status`, `--disciplina` | Planejada |
+| RF03 | Filtrar por status/disciplina | `listar --status`, `--disciplina` | Implementada |
 | RF04 | Concluir entrega | `concluir` | Planejada |
 | RF05 | Editar entrega | `editar` | Planejada |
 | RF06 | Remover entrega | `remover` | Planejada |

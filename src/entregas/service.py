@@ -54,6 +54,14 @@ def cadastrar(conn, titulo, disciplina, prazo, descricao=""):
 
 
 # --- RF02: listar ---
-def listar(conn):
-    cur = conn.execute("SELECT * FROM entregas ORDER BY prazo, id")
-    return cur.fetchall()
+def listar(conn, status=None, disciplina=None):
+    if status is not None and status not in (PENDENTE, CONCLUIDA):
+        raise ErroValidacao("Status inválido. Use 'pendente' ou 'concluida'.")
+    linhas = conn.execute("SELECT * FROM entregas ORDER BY prazo, id").fetchall()
+    # --- RF03: filtros ---
+    if status:
+        linhas = [l for l in linhas if l["status"] == status]
+    if disciplina:
+        alvo = disciplina.strip().casefold()
+        linhas = [l for l in linhas if l["disciplina"].casefold() == alvo]
+    return linhas
