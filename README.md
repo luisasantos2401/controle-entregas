@@ -19,7 +19,7 @@ Cada disciplina passa atividades por um canal diferente e os prazos se acumulam.
 | RF03 | Filtrar por status/disciplina | `listar --status`, `--disciplina` | Implementada |
 | RF04 | Concluir entrega | `concluir` | Implementada |
 | RF05 | Editar entrega | `editar` | Implementada |
-| RF06 | Remover entrega | `remover` | Planejada |
+| RF06 | Remover entrega | `remover` | Implementada |
 | RF07 | Atrasadas e próximas do prazo | `prazos` | Planejada |
 
 Fora do escopo desta versão: interface gráfica, múltiplos usuários, lembretes e exportação de dados.
