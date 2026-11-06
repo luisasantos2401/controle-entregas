@@ -43,6 +43,20 @@ def cmd_concluir(args, conn):
     print(f"Entrega {args.id} concluída.")
 
 
+# --- RF05: editar ---
+def cmd_editar(args, conn):
+    service.editar(
+        conn, args.id, args.titulo, args.disciplina, args.prazo, args.descricao
+    )
+    print(f"Entrega {args.id} atualizada.")
+
+
+# --- RF06: remover ---
+def cmd_remover(args, conn):
+    service.remover(conn, args.id)
+    print(f"Entrega {args.id} removida.")
+
+
 def montar_parser():
     parser = argparse.ArgumentParser(
         prog="entregas", description="Controle de entregas acadêmicas."
@@ -68,6 +82,20 @@ def montar_parser():
     p = sub.add_parser("concluir", help="marca uma entrega como concluída")
     p.add_argument("id", type=int)
     p.set_defaults(func=cmd_concluir)
+
+    # --- RF05 ---
+    p = sub.add_parser("editar", help="altera dados de uma entrega")
+    p.add_argument("id", type=int)
+    p.add_argument("--titulo")
+    p.add_argument("--disciplina")
+    p.add_argument("--prazo", help="AAAA-MM-DD ou DD/MM/AAAA")
+    p.add_argument("--descricao")
+    p.set_defaults(func=cmd_editar)
+
+    # --- RF06 ---
+    p = sub.add_parser("remover", help="apaga uma entrega")
+    p.add_argument("id", type=int)
+    p.set_defaults(func=cmd_remover)
 
     return parser
 

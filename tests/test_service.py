@@ -83,3 +83,41 @@ class TestConcluir(Base):
     def test_id_inexistente(self):
         with self.assertRaises(service.EntregaNaoEncontrada):
             service.concluir(self.conn, 99)
+
+
+# --- RF05 ---
+class TestEditar(Base):
+    def test_edita_so_o_campo_informado(self):
+        id_ = self.nova()
+        service.editar(self.conn, id_, titulo="Novo título")
+        e = service.buscar(self.conn, id_)
+        self.assertEqual(e["titulo"], "Novo título")
+        self.assertEqual(e["disciplina"], "Coding")
+
+    def test_edita_prazo_no_formato_brasileiro(self):
+        id_ = self.nova()
+        service.editar(self.conn, id_, prazo="30/11/2026")
+        self.assertEqual(service.buscar(self.conn, id_)["prazo"], "2026-11-30")
+
+    def test_recusa_edicao_sem_campos(self):
+        id_ = self.nova()
+        with self.assertRaises(service.ErroValidacao):
+            service.editar(self.conn, id_)
+
+    def test_recusa_titulo_vazio(self):
+        id_ = self.nova()
+        with self.assertRaises(service.ErroValidacao):
+            service.editar(self.conn, id_, titulo=" ")
+
+
+# --- RF06 ---
+class TestRemover(Base):
+    def test_remove_entrega(self):
+        id_ = self.nova()
+        service.remover(self.conn, id_)
+        with self.assertRaises(service.EntregaNaoEncontrada):
+            service.buscar(self.conn, id_)
+
+    def test_remover_id_inexistente(self):
+        with self.assertRaises(service.EntregaNaoEncontrada):
+            service.remover(self.conn, 99)
