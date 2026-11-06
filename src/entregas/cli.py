@@ -34,7 +34,7 @@ def cmd_cadastrar(args, conn):
 
 # --- RF02: listar ---
 def cmd_listar(args, conn):
-    _imprimir_tabela(service.listar(conn))
+    _imprimir_tabela(service.listar(conn, args.status, args.disciplina))
 
 
 def montar_parser():
@@ -53,6 +53,9 @@ def montar_parser():
 
     # --- RF02 ---
     p = sub.add_parser("listar", help="lista as entregas por prazo")
+    # --- RF03 ---
+    p.add_argument("--status", help="pendente ou concluida")
+    p.add_argument("--disciplina", help="mostra só uma disciplina")
     p.set_defaults(func=cmd_listar)
 
     return parser
