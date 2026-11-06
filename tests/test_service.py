@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+from datetime import date
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
@@ -83,3 +84,68 @@ class TestConcluir(Base):
     def test_id_inexistente(self):
         with self.assertRaises(service.EntregaNaoEncontrada):
             service.concluir(self.conn, 99)
+
+
+# --- RF05 ---
+class TestEditar(Base):
+    def test_edita_so_o_campo_informado(self):
+        id_ = self.nova()
+        service.editar(self.conn, id_, titulo="Novo título")
+        e = service.buscar(self.conn, id_)
+        self.assertEqual(e["titulo"], "Novo título")
+        self.assertEqual(e["disciplina"], "Coding")
+
+    def test_edita_prazo_no_formato_brasileiro(self):
+        id_ = self.nova()
+        service.editar(self.conn, id_, prazo="30/11/2026")
+        self.assertEqual(service.buscar(self.conn, id_)["prazo"], "2026-11-30")
+
+    def test_recusa_edicao_sem_campos(self):
+        id_ = self.nova()
+        with self.assertRaises(service.ErroValidacao):
+            service.editar(self.conn, id_)
+
+    def test_recusa_titulo_vazio(self):
+        id_ = self.nova()
+        with self.assertRaises(service.ErroValidacao):
+            service.editar(self.conn, id_, titulo=" ")
+
+
+# --- RF06 ---
+class TestRemover(Base):
+    def test_remove_entrega(self):
+        id_ = self.nova()
+        service.remover(self.conn, id_)
+        with self.assertRaises(service.EntregaNaoEncontrada):
+            service.buscar(self.conn, id_)
+
+    def test_remover_id_inexistente(self):
+        with self.assertRaises(service.EntregaNaoEncontrada):
+            service.remover(self.conn, 99)
+
+
+# --- RF07 ---
+class TestAtrasadasProximas(Base):
+    HOJE = date(2026, 11, 10)
+
+    def test_atrasadas_ignora_concluidas_e_futuras(self):
+        velha = self.nova("Velha", prazo="2026-11-01")
+        feita = self.nova("Feita", prazo="2026-11-02")
+        self.nova("Futura", prazo="2026-11-20")
+        service.concluir(self.conn, feita)
+        lista = service.atrasadas(self.conn, hoje=self.HOJE)
+        self.assertEqual([e["id"] for e in lista], [velha])
+
+    def test_prazo_de_hoje_nao_e_atrasado(self):
+        self.nova("Hoje", prazo="2026-11-10")
+        self.assertEqual(service.atrasadas(self.conn, hoje=self.HOJE), [])
+
+    def test_proximas_respeita_a_janela(self):
+        dentro = self.nova("Dentro", prazo="2026-11-14")
+        self.nova("Fora", prazo="2026-12-30")
+        lista = service.proximas(self.conn, dias=7, hoje=self.HOJE)
+        self.assertEqual([e["id"] for e in lista], [dentro])
+
+    def test_dias_negativos_sao_recusados(self):
+        with self.assertRaises(service.ErroValidacao):
+            service.proximas(self.conn, dias=-1, hoje=self.HOJE)
