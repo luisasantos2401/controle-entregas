@@ -51,3 +51,9 @@ def cadastrar(conn, titulo, disciplina, prazo, descricao=""):
     )
     conn.commit()
     return cur.lastrowid
+
+
+# --- RF02: listar ---
+def listar(conn):
+    cur = conn.execute("SELECT * FROM entregas ORDER BY prazo, id")
+    return cur.fetchall()
