@@ -108,3 +108,16 @@ class TestEditar(Base):
         id_ = self.nova()
         with self.assertRaises(service.ErroValidacao):
             service.editar(self.conn, id_, titulo=" ")
+
+
+# --- RF06 ---
+class TestRemover(Base):
+    def test_remove_entrega(self):
+        id_ = self.nova()
+        service.remover(self.conn, id_)
+        with self.assertRaises(service.EntregaNaoEncontrada):
+            service.buscar(self.conn, id_)
+
+    def test_remover_id_inexistente(self):
+        with self.assertRaises(service.EntregaNaoEncontrada):
+            service.remover(self.conn, 99)
