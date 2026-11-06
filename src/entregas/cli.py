@@ -37,6 +37,12 @@ def cmd_listar(args, conn):
     _imprimir_tabela(service.listar(conn, args.status, args.disciplina))
 
 
+# --- RF04: concluir ---
+def cmd_concluir(args, conn):
+    service.concluir(conn, args.id)
+    print(f"Entrega {args.id} concluída.")
+
+
 def montar_parser():
     parser = argparse.ArgumentParser(
         prog="entregas", description="Controle de entregas acadêmicas."
@@ -57,6 +63,11 @@ def montar_parser():
     p.add_argument("--status", help="pendente ou concluida")
     p.add_argument("--disciplina", help="mostra só uma disciplina")
     p.set_defaults(func=cmd_listar)
+
+    # --- RF04 ---
+    p = sub.add_parser("concluir", help="marca uma entrega como concluída")
+    p.add_argument("id", type=int)
+    p.set_defaults(func=cmd_concluir)
 
     return parser
 
