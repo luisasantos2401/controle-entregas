@@ -1,5 +1,5 @@
 """Regras de negócio do controle de entregas."""
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 PENDENTE = "pendente"
 CONCLUIDA = "concluida"
@@ -104,3 +104,26 @@ def remover(conn, id_entrega):
     buscar(conn, id_entrega)
     conn.execute("DELETE FROM entregas WHERE id = ?", (id_entrega,))
     conn.commit()
+
+
+# --- RF07: atrasadas e próximas ---
+def atrasadas(conn, hoje=None):
+    hoje = (hoje or date.today()).isoformat()
+    cur = conn.execute(
+        "SELECT * FROM entregas WHERE status = ? AND prazo < ? ORDER BY prazo, id",
+        (PENDENTE, hoje),
+    )
+    return cur.fetchall()
+
+
+def proximas(conn, dias=7, hoje=None):
+    if dias < 0:
+        raise ErroValidacao("O número de dias não pode ser negativo.")
+    hoje = hoje or date.today()
+    limite = hoje + timedelta(days=dias)
+    cur = conn.execute(
+        "SELECT * FROM entregas WHERE status = ? AND prazo >= ? AND prazo <= ? "
+        "ORDER BY prazo, id",
+        (PENDENTE, hoje.isoformat(), limite.isoformat()),
+    )
+    return cur.fetchall()
