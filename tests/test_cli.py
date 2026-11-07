@@ -66,7 +66,15 @@ class TestCli(unittest.TestCase):
         self.assertEqual(codigo, 1)
         self.assertIn("não encontrada", erro)
 
-    def test_atrasadas_lista_prazo_vencido(self):
+    def test_prazos_mostra_os_dois_grupos(self):
         self.rodar("cadastrar", "Velha", "Coding", "01/01/2020")
-        _, saida, _ = self.rodar("atrasadas")
+        codigo, saida, _ = self.rodar("prazos")
+        self.assertEqual(codigo, 0)
+        self.assertIn("Atrasadas", saida)
+        self.assertIn("Próximos 7 dias", saida)
         self.assertIn("Velha", saida)
+
+    def test_prazos_com_dias_negativos_retorna_erro(self):
+        codigo, _, erro = self.rodar("prazos", "--dias", "-1")
+        self.assertEqual(codigo, 1)
+        self.assertIn("negativo", erro)

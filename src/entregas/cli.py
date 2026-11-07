@@ -57,13 +57,14 @@ def cmd_remover(args, conn):
     print(f"Entrega {args.id} removida.")
 
 
-# --- RF07: atrasadas e próximas ---
-def cmd_atrasadas(args, conn):
+# --- RF07: prazos (atrasadas e próximas) ---
+def cmd_prazos(args, conn):
+    proximas = service.proximas(conn, args.dias)
+    print("Atrasadas")
     _imprimir_tabela(service.atrasadas(conn))
-
-
-def cmd_proximas(args, conn):
-    _imprimir_tabela(service.proximas(conn, args.dias))
+    print()
+    print(f"Próximos {args.dias} dias")
+    _imprimir_tabela(proximas)
 
 
 def montar_parser():
@@ -107,12 +108,9 @@ def montar_parser():
     p.set_defaults(func=cmd_remover)
 
     # --- RF07 ---
-    p = sub.add_parser("atrasadas", help="lista pendentes com prazo vencido")
-    p.set_defaults(func=cmd_atrasadas)
-
-    p = sub.add_parser("proximas", help="lista pendentes que vencem em breve")
+    p = sub.add_parser("prazos", help="mostra atrasadas e próximas do prazo")
     p.add_argument("--dias", type=int, default=7, help="janela em dias (padrão 7)")
-    p.set_defaults(func=cmd_proximas)
+    p.set_defaults(func=cmd_prazos)
 
     return parser
 
