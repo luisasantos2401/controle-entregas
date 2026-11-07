@@ -1,6 +1,6 @@
 # Controle de Entregas
 
-![versão](https://img.shields.io/badge/vers%C3%A3o-v1.0.0-blue)
+![versão](https://img.shields.io/badge/vers%C3%A3o-v1.0.1-blue)
 ![licença](https://img.shields.io/badge/licen%C3%A7a-MIT-green)
 ![testes](https://github.com/luisasantos2401/controle-entregas/actions/workflows/tests.yml/badge.svg)
 
@@ -74,7 +74,7 @@ python -m unittest discover -s tests -v
 
 Commits seguem o padrão [Conventional Commits](https://www.conventionalcommits.org/pt-br/) (`feat`, `fix`, `docs`, `test`, `chore`, `ci`) com o número da issue no fim, por exemplo `feat(service): cadastrar entrega com validação (#9)`.
 
-Versões: `v0.1.0` documentação e persistência · `v0.2.0` cadastrar, listar, filtrar e concluir · `v0.3.0` editar, remover e prazos · `v1.0.0` testes de integração e CI.
+Versões: `v0.1.0` documentação e persistência · `v0.2.0` cadastrar, listar, filtrar e concluir · `v0.3.0` editar, remover e prazos · `v1.0.0` testes de integração e CI. · `v1.0.1` correção do comando `prazos`.
 
 ## Licença
 
